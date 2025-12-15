@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useAtom } from "jotai";
 import { selectedUserAtom } from "../store/user";
-import UserLinks from "./UserLinks";
+import Links from "./Links";
 import "./style.css";
 
 function AddUser() {
   const history = useHistory();
-  const [selectedUser] = useAtom(selectedUserAtom);
+  const [selectedUser, setSelectedUser] = useAtom(selectedUserAtom);
   let [state, setState] = useState({
     name: "",
     email: "",
@@ -33,7 +33,8 @@ function AddUser() {
     });
     setIsLoading(false);
     const data = await res.json();
-    if (data.status == 200 || data.status == 201) {
+    if (data.status === 200 || data.status === 201) {
+      setSelectedUser(null);
       window.alert("User added successfully");
       history.push("/viewusers");
     } else {
@@ -60,7 +61,8 @@ function AddUser() {
     );
     setIsLoading(false);
     const data = await res.json();
-    if (data.status == 200 || data.status == 201) {
+    if (data.status === 200 || data.status === 201) {
+      setSelectedUser(null);
       window.alert("User updated successfully");
       history.push("/viewusers");
     } else {
@@ -72,12 +74,15 @@ function AddUser() {
     if (selectedUser?._id) {
       setState({ email: selectedUser?.email, name: selectedUser?.name });
     }
+    return () => {
+      setSelectedUser(null);
+    };
   }, [selectedUser]);
 
   return (
     <div className="main">
       <header className="adduser_header">
-        <UserLinks />
+        <Links />
       </header>
       <div className="form">
         <form method="post">
@@ -107,7 +112,11 @@ function AddUser() {
             className="adduser_btn"
             disabled={isLoading}
           >
-            {isLoading ? "Processing..." : selectedUser?._id ? "Update User" : "Add User"}
+            {isLoading
+              ? "Processing..."
+              : selectedUser?._id
+              ? "Update User"
+              : "Add User"}
           </button>
         </form>
       </div>

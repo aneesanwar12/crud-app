@@ -17,7 +17,8 @@
   font-weight: 600;
 }
 .view_user,
-.add_user {
+.add_user,
+.view_logs {
   margin-left: 30px;
   cursor: pointer;
   color: #000;
@@ -26,6 +27,7 @@
 Link {
   text-decoration: none;
 }
+.view_logs:visited,
 .view_user:visited,
 .add_user:visited .form {
   width: 100%;

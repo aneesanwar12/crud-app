@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAtom } from "jotai";
 import { selectedUserAtom } from "../store/user";
-import UserLinks from "./UserLinks";
+import Links from "./Links";
 import "./style.css";
 
 function ViewUser() {
@@ -40,7 +40,7 @@ function ViewUser() {
     <div className="main">
       <header className="header">
         <div className="user-pages">
-          <UserLinks />
+          <Links />
         </div>
       </header>
       {users && users.length ? (
