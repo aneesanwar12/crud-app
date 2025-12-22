@@ -14,7 +14,7 @@ const User = new mongoose.Schema({
     type: String,
     required: true,
   },
-  permission: {
+  userType: {
     type: String,
   },
 });

@@ -3,13 +3,11 @@ const joi = require("joi");
 const validation = (user) => {
   const validSchema = joi.object({
     name: joi.string().min(3).max(30).required(),
-    email: joi
-      .string()
-      .email({
-        minDomainSegments: 2,
-        tlds: { allow: ["com", "io", "co", "pk", "net"] },
-      }),
-    permission: joi.string().required(),
+    email: joi.string().email({
+      minDomainSegments: 2,
+      tlds: { allow: ["com", "io", "co", "pk", "net"] },
+    }),
+    userType: joi.string().required(),
   });
   return validSchema.validate(user);
 };

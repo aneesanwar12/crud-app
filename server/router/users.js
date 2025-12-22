@@ -18,7 +18,7 @@ router.post("/addnewuser", validatedUser(validation), async (req, res) => {
     const newUser = new User({
       name: req.body.name,
       email: req.body.email,
-      permission: req.body.permission,
+      userType: req.body.userType,
     });
 
     const addUser = await newUser.save();
