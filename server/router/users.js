@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express();
-const User = require("../models/userModal");
+const User = require("../model/userModel");
 const { validatedUser, validation } = require("../validation/userValidation");
 const { saveLog } = require("../utils");
 
@@ -18,6 +18,7 @@ router.post("/addnewuser", validatedUser(validation), async (req, res) => {
     const newUser = new User({
       name: req.body.name,
       email: req.body.email,
+      permission: req.body.permission,
     });
 
     const addUser = await newUser.save();

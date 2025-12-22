@@ -1,12 +1,13 @@
-const Log = require("../models/logModel.js"); // adjust path if needed
+const Log = require("../model/logModel.js"); // adjust path if needed
 
-const saveLog = async (method, endpoint, statusCode) => {
+const saveLog = async (method, endpoint, statusCode, loggedBy) => {
   try {
     const log = new Log({
       method,
       endpoint,
       statusCode,
-      loggedAt: Date.now(), // Unix timestamp in ms
+      loggedBy,
+      loggedAt: Date.now(),
     });
 
     await log.save();

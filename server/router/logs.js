@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express();
-const Log = require("../models/logModel");
+const Log = require("../model/logModel");
 
 router.get("/getlogs", async (req, res) => {
   try {

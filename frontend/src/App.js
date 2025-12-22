@@ -1,20 +1,24 @@
 import { Route, Switch } from "react-router-dom";
-import AddUser from "./components/AddUser";
-import ViewUser from "./components/ViewUser";
-import ViewLogs from "./components/ViewLogs";
+import { ViewProducts } from "./components/Products/ViewProducts";
+import { Login } from "./components/Login/Login";
+import { AddProduct } from "./components/Products/AddProduct";
+import { ViewLogs } from "./components/Logs/ViewLogs";
 
 function App() {
   return (
     <>
       <Switch>
         <Route exact path="/">
-          <ViewUser />
+          <ViewProducts />
         </Route>
-        <Route exact path="/viewusers">
-          <ViewUser />
+        <Route exact path="/login">
+          <Login />
         </Route>
-        <Route exact path="/adduser">
-          <AddUser />
+        <Route exact path="/viewproducts">
+          <ViewProducts />
+        </Route>
+        <Route exact path="/addproduct">
+          <AddProduct />
         </Route>
         <Route exact path="/viewlogs">
           <ViewLogs />

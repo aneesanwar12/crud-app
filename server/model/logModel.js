@@ -17,6 +17,9 @@ const Log = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  loggedBy: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Logs", Log);

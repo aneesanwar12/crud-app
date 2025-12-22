@@ -1,47 +1,50 @@
 import { useEffect, useState } from "react";
-import Links from "./Links";
-import "./style.css";
+import { Header, Wrapper } from "../../commonStyles";
+import { apiRequest } from "../../utils/apiRequest";
+import Links from "../Links";
+import { ProductsWrapper } from "../Products/style";
 
-function ViewLogs() {
+export const ViewLogs = () => {
   let [logs, setLogs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getLogs = () => {
-    setIsLoading(true);
-    fetch("http://localhost:8000/api/getlogs")
-      .then((result) => result.json())
-      .then((json) => {
-        setLogs(json.logs);
-        setIsLoading(false);
-      });
+  const getLogs = async () => {
+    try {
+      setIsLoading(true);
+      const data = await apiRequest("/getlogs");
+      setLogs(data.logs);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const onDelete = () => {
-    fetch(`http://localhost:8000/api/clearlogs`, {
-      method: "DELETE",
-    }).then(() => {
-      window.alert("Logs cleared successfully");
-    });
+  const onDelete = async () => {
+    try {
+      const data = await apiRequest("/clearlogs", { method: "DELETE" });
+    } catch (err) {
+      console.error(err);
+    }
   };
   useEffect(() => {
     getLogs();
     // onDelete();
   }, []);
   return (
-    <div className="main">
-      <header className="header">
-        <div className="user-pages">
-          <Links />
-        </div>
-      </header>
+    <Wrapper>
+      <Header>
+        <Links />
+      </Header>
       {logs && logs.length ? (
-        <div className="table">
+        <ProductsWrapper>
           <table>
             <thead>
               <tr>
                 <th>Method</th>
                 <th>End Point</th>
                 <th>Status Code</th>
+                <th>Logged By</th>
                 <th>Logged At</th>
               </tr>
             </thead>
@@ -52,20 +55,19 @@ function ViewLogs() {
                     <th>{log.method}</th>
                     <th>{log.endpoint}</th>
                     <th>{log.statusCode}</th>
+                    <th>{log.loggedBy}</th>
                     <th>{new Date(log.loggedAt).toLocaleString()}</th>
                   </tr>
                 );
               })}
             </tbody>
           </table>
-        </div>
+        </ProductsWrapper>
       ) : (
         <div className="loading-text">
           {isLoading ? "Loading logs..." : "No logs found"}
         </div>
       )}
-    </div>
+    </Wrapper>
   );
-}
-
-export default ViewLogs;
+};

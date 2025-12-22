@@ -4,8 +4,10 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config();
 
-const userRouter = require("./router/userRouter");
-const logsRouter = require("./router/logRouter");
+const auth = require("./middleware/auth");
+const authRouter = require("./router/auth");
+const productRouter = require("./router/products");
+const logsRouter = require("./router/logs");
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -19,8 +21,9 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use("/api", userRouter);
-app.use("/api", logsRouter);
+app.use("/api", authRouter);
+app.use("/api", auth, productRouter);
+app.use("/api", auth, logsRouter);
 
 app.listen(8000, () => {
   console.log("this server is running on port no 8000");
